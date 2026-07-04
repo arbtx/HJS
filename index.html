@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Himachal Janta Store — Totu, Shimla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#1F3A2E; --pine-deep:#142922; --cream:#F7F1E3; --paper:#FFFCF6;
+    --terracotta:#C2693B; --apple:#A8392F; --gold:#D2A23A; --stone:#6E7B73;
+    --green-wa:#25D366; --line:rgba(31,58,46,0.14); --shadow:0 10px 30px rgba(20,41,34,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--cream);color:var(--pine-deep);font-family:'Work Sans',sans-serif;overflow-x:hidden;}
+  h1,h2,h3{font-family:'Fraunces',serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* LOADER */
+  #loader{position:fixed;inset:0;z-index:9999;background:var(--pine-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--cream);transition:opacity 0.7s ease,visibility 0.7s ease;}
+  #loader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  .loader-mark{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:600;margin-bottom:1.4rem;opacity:0;text-align:center;padding:0 1.5rem;animation:fadeUp 0.8s ease forwards 0.1s;}
+  .loader-caption{font-size:0.95rem;color:var(--gold);min-height:1.4em;letter-spacing:0.3px;transition:opacity 0.2s;}
+  .loader-bar{width:200px;height:2px;background:rgba(247,241,227,0.18);margin-top:1.8rem;position:relative;overflow:hidden;border-radius:2px;}
+  .loader-bar::after{content:'';position:absolute;left:-40%;top:0;height:100%;width:40%;background:var(--gold);animation:slide 1.1s ease-in-out infinite;}
+  @keyframes slide{0%{left:-40%;}100%{left:100%;}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:200;background:rgba(247,241,227,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav-wrap{max-width:1180px;margin:0 auto;padding:0.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .brand{display:flex;align-items:center;gap:0.6rem;flex-shrink:0;}
+  .brand-logo{
+    width:70px;
+    height:60px;
+    border-radius:50%;
+    object-fit:cover;}
+  .brand-name{font-size:1.15rem;font-weight:600;line-height:1.2;}
+  .loader-logo{
+    width:90px;
+    margin-bottom:15px;}
+  .brand-loc{font-size:0.68rem;color:var(--stone);letter-spacing:0.4px;text-transform:uppercase;}
+  nav ul{list-style:none;display:flex;gap:1.6rem;}
+  nav a{color:var(--pine-deep);text-decoration:none;font-size:0.9rem;font-weight:500;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color 0.2s;}
+  nav a:hover{border-color:var(--terracotta);}
+  .nav-right{display:flex;align-items:center;gap:0.8rem;}
+
+  /* CART BUTTON in nav */
+  .cart-nav-btn{
+    position:relative;background:var(--pine);color:var(--cream);border:none;border-radius:999px;
+    padding:0.55rem 1.2rem;font-size:0.85rem;font-weight:500;cursor:pointer;
+    display:flex;align-items:center;gap:0.45rem;transition:background 0.2s;white-space:nowrap;
+  }
+  .cart-nav-btn:hover{background:var(--pine-deep);}
+  .cart-count{
+    background:var(--apple);color:#fff;border-radius:50%;width:18px;height:18px;
+    font-size:0.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;
+    position:absolute;top:-5px;right:-5px;
+    opacity:0;transform:scale(0);transition:opacity 0.2s,transform 0.2s;
+  }
+  .cart-count.show{opacity:1;transform:scale(1);}
+
+  /* HERO */
+  .hero{max-width:1180px;margin:0 auto;padding:4rem 1.5rem 3.2rem;display:grid;grid-template-columns:1.15fr 0.85fr;gap:3rem;align-items:center;}
+  .eyebrow{font-size:0.76rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--terracotta);font-weight:600;margin-bottom:0.9rem;display:flex;align-items:center;gap:0.5rem;}
+  .eyebrow::before{content:'';width:18px;height:1px;background:var(--terracotta);display:inline-block;}
+  .hero h1{font-size:3rem;line-height:1.06;font-weight:600;margin-bottom:1rem;}
+  .hero h1 em{font-style:italic;color:var(--apple);font-weight:500;}
+  .hero p{font-size:1rem;color:var(--stone);max-width:46ch;line-height:1.65;margin-bottom:1.8rem;}
+  .hero-actions{display:flex;gap:0.9rem;flex-wrap:wrap;}
+  .btn-primary{background:var(--apple);color:var(--paper);padding:0.85rem 1.6rem;border-radius:8px;text-decoration:none;font-weight:500;font-size:0.95rem;box-shadow:var(--shadow);}
+  .btn-ghost{border:1px solid var(--pine);color:var(--pine);padding:0.85rem 1.6rem;border-radius:8px;text-decoration:none;font-weight:500;font-size:0.95rem;}
+  .hero-stats{display:flex;gap:2rem;margin-top:2.4rem;}
+  .hero-stats div{font-family:'Fraunces',serif;font-size:1.45rem;font-weight:600;color:var(--pine);}
+  .hero-stats span{display:block;font-family:'Work Sans',sans-serif;font-size:0.72rem;color:var(--stone);font-weight:500;text-transform:uppercase;letter-spacing:0.4px;margin-top:0.2rem;}
+  .hero-visual{position:relative;aspect-ratio:1/1.05;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,var(--pine) 0%,var(--pine-deep) 100%);display:flex;align-items:flex-end;padding:1.6rem;box-shadow:var(--shadow);}
+  .hero-visual{
+    position:relative;
+    overflow:hidden;
+    border-radius:28px;
+    min-height:520px;}
+  .hero-image{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;}
+  .hero-badge{
+    position:absolute;
+    left:30px;
+    bottom:30px;
+    z-index:2;}
+  .hero-badge{position:relative;z-index:2;background:var(--paper);border-radius:12px;padding:1rem 1.2rem;box-shadow:0 6px 20px rgba(0,0,0,0.18);transform:rotate(-3deg);transition: transform 0.25s ease, box-shadow 0.25s ease;}
+  .hero-badge:hover{
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25);}
+  .hero-badge .label{font-size:0.66rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--stone);}
+  .hero-badge .val{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:var(--apple);}
+
+  /* RIDGE */
+  .ridge{width:100%;height:46px;display:block;}
+
+  /* CATALOG SECTION */
+  .section{max-width:1180px;margin:0 auto;padding:3.4rem 1.5rem;}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+  .section-head h2{font-size:2rem;font-weight:600;}
+  .section-head p{color:var(--stone);font-size:0.92rem;max-width:42ch;}
+
+  /* TABS */
+  .tabs{display:flex;gap:0.55rem;flex-wrap:wrap;margin-bottom:2.2rem;}
+  .tab{padding:0.5rem 1.1rem;border-radius:999px;border:1px solid var(--line);background:var(--paper);font-size:0.86rem;font-weight:500;cursor:pointer;color:var(--pine-deep);transition:all 0.18s ease;}
+  .tab.active{background:var(--pine);color:var(--cream);border-color:var(--pine);}
+  .tab:hover:not(.active){border-color:var(--terracotta);color:var(--terracotta);}
+
+  /* PRODUCT GRID */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .card{background:var(--paper);border-radius:14px;overflow:hidden;border:1px solid var(--line);transition:transform 0.22s ease,box-shadow 0.22s ease;display:flex;flex-direction:column;}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+
+  /* Product image area — ready for real photos */
+  .card-img{
+    aspect-ratio:1/0.82;display:flex;align-items:center;justify-content:center;
+    font-size:3.2rem;position:relative;overflow:hidden;
+  }
+  /* When a real <img> is inside card-img, make it fill the area */
+  .card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .card-img .emoji-fallback{position:relative;z-index:1;}
+  .card-tag{position:absolute;top:0.65rem;left:0.65rem;z-index:2;background:var(--gold);color:var(--pine-deep);font-size:0.62rem;font-weight:700;padding:0.22rem 0.5rem;border-radius:999px;text-transform:uppercase;letter-spacing:0.3px;}
+
+  .card-body{padding:1rem 1.1rem 1.2rem;display:flex;flex-direction:column;gap:0.5rem;flex:1;}
+  .card-body h3{font-size:1rem;font-weight:600;line-height:1.25;}
+  .card-body .unit{font-size:0.76rem;color:var(--stone);}
+  .price-row{display:flex;align-items:baseline;justify-content:space-between;margin-top:auto;padding-top:0.45rem;}
+  .price{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:1.1rem;color:var(--apple);}
+  .price span{font-size:0.7rem;color:var(--stone);}
+
+  /* ADD TO CART controls */
+  .card-actions{margin-top:0.5rem;}
+  .add-btn{
+    width:100%;display:flex;align-items:center;justify-content:center;gap:0.4rem;
+    background:var(--pine);color:var(--cream);border:none;border-radius:8px;
+    padding:0.6rem;font-size:0.84rem;font-weight:500;cursor:pointer;transition:background 0.18s;
+  }
+  .add-btn:hover{background:var(--pine-deep);}
+  .qty-ctrl{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:8px;overflow:hidden;border:1px solid var(--line);}
+  .qty-btn{background:none;border:none;width:36px;height:36px;cursor:pointer;font-size:1.1rem;font-weight:600;color:var(--pine-deep);display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+  .qty-btn:hover{background:var(--line);}
+  .qty-num{font-family:'JetBrains Mono',monospace;font-size:0.9rem;font-weight:500;min-width:28px;text-align:center;}
+
+  /* ABOUT STRIP */
+  .strip{background:var(--pine);color:var(--cream);}
+  .strip-wrap{max-width:1180px;margin:0 auto;padding:3.4rem 1.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem;}
+  .strip-item .num{font-family:'Fraunces',serif;font-size:1.5rem;color:var(--gold);margin-bottom:0.5rem;}
+  .strip-item p{font-size:0.9rem;color:rgba(247,241,227,0.8);line-height:1.6;}
+
+  /* FOOTER */
+  footer{background:var(--pine-deep);color:rgba(247,241,227,0.7);padding:2.4rem 1.5rem 1.6rem;}
+  .footer-wrap{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:center;}
+  .footer-wrap .f-brand{color:var(--cream);font-family:'Fraunces',serif;font-size:1.1rem;}
+  .footer-wrap small{font-size:0.76rem;}
+
+  /* ===================== CART DRAWER ===================== */
+  .cart-overlay{position:fixed;inset:0;background:rgba(20,41,34,0.45);z-index:500;opacity:0;visibility:hidden;transition:opacity 0.3s,visibility 0.3s;}
+  .cart-overlay.open{opacity:1;visibility:visible;}
+
+  .cart-drawer{
+    position:fixed;top:0;right:0;bottom:0;width:400px;max-width:95vw;
+    background:var(--paper);z-index:501;display:flex;flex-direction:column;
+    transform:translateX(110%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    box-shadow:-8px 0 40px rgba(20,41,34,0.18);
+  }
+  .cart-drawer.open{transform:translateX(0);}
+
+  .cart-header{
+    padding:1.3rem 1.4rem;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  }
+  .cart-header h2{font-size:1.3rem;font-weight:600;}
+  .cart-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--stone);line-height:1;padding:0.2rem;}
+  .cart-close:hover{color:var(--pine-deep);}
+
+  .cart-tag{
+    background:var(--cream);border-radius:999px;padding:0.3rem 0.8rem;
+    font-size:0.72rem;font-weight:600;color:var(--terracotta);border:1px solid rgba(194,105,59,0.25);
+    display:inline-flex;align-items:center;gap:0.3rem;
+  }
+
+  .cart-body{flex:1;overflow-y:auto;padding:1rem 1.4rem;}
+  .cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:0.8rem;color:var(--stone);}
+  .cart-empty span{font-size:3rem;}
+  .cart-empty p{font-size:0.92rem;text-align:center;}
+
+  .cart-item{
+    display:flex;align-items:center;gap:0.9rem;padding:0.9rem 0;
+    border-bottom:1px solid var(--line);
+  }
+  .ci-icon{
+    width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-size:1.6rem;flex-shrink:0;overflow:hidden;
+  }
+  .ci-icon img{width:100%;height:100%;object-fit:cover;}
+  .ci-info{flex:1;min-width:0;}
+  .ci-name{font-size:0.88rem;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .ci-unit{font-size:0.72rem;color:var(--stone);}
+  .ci-price{font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--apple);font-weight:500;margin-top:0.15rem;}
+  .ci-qty{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+  .ciq-btn{
+    background:var(--cream);border:1px solid var(--line);border-radius:6px;
+    width:28px;height:28px;cursor:pointer;font-size:1rem;font-weight:600;
+    color:var(--pine-deep);display:flex;align-items:center;justify-content:center;
+  }
+  .ciq-btn:hover{background:var(--line);}
+  .ciq-num{font-family:'JetBrains Mono',monospace;font-size:0.85rem;min-width:20px;text-align:center;}
+
+  .cart-footer{padding:1.2rem 1.4rem;border-top:1px solid var(--line);flex-shrink:0;}
+  .cart-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem;}
+  .cart-total-label{font-size:0.85rem;color:var(--stone);}
+  .cart-total-amt{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:600;color:var(--pine-deep);}
+  .cart-note{font-size:0.72rem;color:var(--stone);margin-bottom:1rem;line-height:1.5;padding:0.6rem 0.8rem;background:var(--cream);border-radius:8px;}
+
+  .wa-order-btn{
+    width:100%;display:flex;align-items:center;justify-content:center;gap:0.6rem;
+    background:var(--green-wa);color:#fff;border:none;border-radius:10px;
+    padding:0.9rem;font-size:0.95rem;font-weight:600;cursor:pointer;text-decoration:none;
+    transition:filter 0.18s;
+  }
+  .wa-order-btn:hover{filter:brightness(0.92);}
+  .wa-order-btn svg{width:18px;height:18px;fill:currentColor;}
+
+  .clear-cart{
+    width:100%;background:none;border:none;color:var(--stone);font-size:0.78rem;
+    cursor:pointer;margin-top:0.6rem;padding:0.4rem;text-decoration:underline;
+  }
+  .clear-cart:hover{color:var(--apple);}
+
+  /* NAME CAPTURE modal */
+  .name-modal-overlay{position:fixed;inset:0;background:rgba(20,41,34,0.55);z-index:600;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 0.25s,visibility 0.25s;}
+  .name-modal-overlay.open{opacity:1;visibility:visible;}
+  .name-modal{background:var(--paper);border-radius:16px;padding:2rem;width:360px;max-width:90vw;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+  .name-modal h3{font-size:1.25rem;margin-bottom:0.4rem;}
+  .name-modal p{font-size:0.88rem;color:var(--stone);margin-bottom:1.2rem;line-height:1.5;}
+  .name-modal input{
+    width:100%;padding:0.75rem 1rem;border:1.5px solid var(--line);border-radius:8px;
+    font-size:0.95rem;font-family:'Work Sans',sans-serif;background:var(--cream);
+    outline:none;transition:border-color 0.2s;margin-bottom:1rem;
+  }
+  .name-modal input:focus{border-color:var(--pine);}
+  .modal-btns{display:flex;gap:0.7rem;}
+  .modal-confirm{flex:1;background:var(--green-wa);color:#fff;border:none;border-radius:8px;padding:0.75rem;font-size:0.92rem;font-weight:600;cursor:pointer;}
+  .modal-cancel{background:none;border:1px solid var(--line);border-radius:8px;padding:0.75rem 1rem;font-size:0.9rem;cursor:pointer;color:var(--stone);}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--pine-deep);color:var(--cream);padding:0.65rem 1.3rem;border-radius:999px;font-size:0.84rem;font-weight:500;z-index:800;opacity:0;transition:opacity 0.25s,transform 0.25s;pointer-events:none;white-space:nowrap;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:880px){
+    .hero{grid-template-columns:1fr;padding-top:2.5rem;}
+    .hero h1{font-size:2.2rem;}
+    .hero-visual{display:none;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    nav ul{display:none;}
+    .strip-wrap{grid-template-columns:1fr;}
+  }
+  @media(max-width:460px){
+    .grid{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <img src="C:\Users\admin\Desktop\New folder\Main\logo.png" alt="Logo" class="loader-logo">
+  <div class="loader-caption mono" id="caption">Rolling up the shop shutters...</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- CART OVERLAY + DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div>
+      <h2>Your Cart</h2>
+      <div style="margin-top:0.3rem;">
+        <span class="cart-tag">🛍️ Takeaway Only</span>
+      </div>
+    </div>
+    <button class="cart-close" onclick="closeCart()" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Order Total</span>
+      <span class="cart-total-amt" id="cartTotal">₹0</span>
+    </div>
+    <div class="cart-note">
+      📍 <strong>Takeaway order</strong> — please collect from our shop in Totu, Shimla.<br>
+      No advance payment needed. Pay at the counter.
+    </div>
+    <button class="wa-order-btn" onclick="openNameModal()">
+      <svg viewBox="0 0 24 24"><path d="M17.6 6.3A8.8 8.8 0 0 0 3.6 16.4L2 22l5.8-1.5a8.8 8.8 0 0 0 12.4-7.9 8.7 8.7 0 0 0-2.6-6.3zM12 19.4a7.3 7.3 0 0 1-3.7-1l-.3-.2-2.7.7.7-2.6-.2-.3a7.4 7.4 0 1 1 6.2 3.4zm4-5.5c-.2-.1-1.3-.6-1.5-.7s-.4-.1-.5.1-.6.7-.7.9-.3.2-.5.1a6 6 0 0 1-1.8-1.1 6.7 6.7 0 0 1-1.2-1.5c-.1-.2 0-.4.1-.5l.4-.4.2-.3v-.3c0-.1-.5-1.2-.7-1.7s-.4-.4-.5-.4h-.4a.9.9 0 0 0-.6.3 2.6 2.6 0 0 0-.8 1.9 4.5 4.5 0 0 0 1 2.4 10.3 10.3 0 0 0 4 3.5c1.4.6 2 .6 2.4.6a2 2 0 0 0 1.4-1 1.6 1.6 0 0 0 .1-1c-.1-.1-.2-.2-.4-.3z"/></svg>
+      Send Order on WhatsApp
+    </button>
+    <button class="clear-cart" onclick="clearCart()">Clear cart</button>
+  </div>
+</aside>
+
+<!-- NAME MODAL -->
+<div class="name-modal-overlay" id="nameModal">
+  <div class="name-modal">
+    <h3>Almost there! 🎉</h3>
+    <p>Enter your name so we know who the order is for when you come to collect.</p>
+    <input type="text" id="customerName" placeholder="Your name" maxlength="40" />
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeNameModal()">Back</button>
+      <button class="modal-confirm" onclick="sendWhatsApp()">Send Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<header>
+  <div class="nav-wrap">
+    <div class="brand">
+      <img src="C:\Users\admin\Desktop\New folder\Main\logo.png" alt="Himachal Janta Store Logo" class="brand-logo">
+      <div>
+        <div class="brand-name">Himachal Janta Store</div>
+        <div class="brand-loc">Totu · Shimla · HP</div>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#dryfruits">Dry Fruits</a></li>
+        <li><a href="#pulses">Pulses &amp; Atta</a></li>
+        <li><a href="#spreads">Spreads &amp; Oils</a></li>
+        <li><a href="#snacks">Snacks &amp; Instant</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-nav-btn" onclick="openCart()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Cart
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="eyebrow">Your neighbourhood store</div>
+    <h1>From our shelves to your home, <em>since 1975.</em></h1>
+    <p>Lentils, atta, spices, oils and our specialty — premium dry fruits — all at Himachal Janta Store, Totu. Add items to your cart and place a takeaway order directly on WhatsApp.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#catalog">Browse &amp; add to cart</a>
+      <a class="btn-ghost" href="https://wa.me/910000000000" target="_blank">Chat with us</a>
+    </div>
+    <div class="hero-stats">
+      <div>7:30 AM<span>Opens daily</span></div>
+      <div>36+<span>Items in stock</span></div>
+      <div>Mon–Sun<span>Open every day</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+
+    <img src="Images/Kashmiri Almonds.jpeg"
+         alt="Kashmiri Almonds"
+         class="hero-image">
+
+    <div class="hero-badge" onclick="addToCart(1)">
+        <div class="label">MOST ASKED FOR</div>
+        <div class="val">Kashmiri Almonds — ₹780/kg</div>
+    </div>
+
+  </div>
+</section>
+
+<svg class="ridge" viewBox="0 0 1200 46" preserveAspectRatio="none">
+  <polygon points="0,46 0,20 100,5 220,28 340,8 460,30 600,4 740,26 860,10 1000,32 1100,12 1200,24 1200,46" fill="#F7F1E3"/>
+  <polygon points="0,46 0,30 100,18 220,38 340,20 460,40 600,16 740,36 860,22 1000,42 1100,24 1200,34 1200,46" fill="#FFFCF6"/>
+</svg>
+
+<!-- CATALOG -->
+<section class="section" id="catalog">
+  <div class="section-head">
+    <div>
+      <h2>What's on the shelf</h2>
+      <p>Add items to your cart, then send your takeaway order on WhatsApp.</p>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-filter="all">All</button>
+    <button class="tab" data-filter="dryfruits">🌰 Dry Fruits</button>
+    <button class="tab" data-filter="pulses">🫘 Pulses, Atta &amp; Rice</button>
+    <button class="tab" data-filter="spreads">🫙 Spreads &amp; Oils</button>
+    <button class="tab" data-filter="spices">🌶️ Spices</button>
+    <button class="tab" data-filter="snacks">🍜 Snacks &amp; Instant</button>
+    <button class="tab" data-filter="bakery">🍪 Biscuits &amp; Bakery</button>
+    <button class="tab" data-filter="vegetables">🥔 Vegetables</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section class="strip">
+  <div class="strip-wrap">
+    <div class="strip-item">
+      <div class="num">01</div>
+      <p>Dry fruits are our specialty — almonds, cashews, walnuts and more, picked for quality and kept fresh in store.</p>
+    </div>
+    <div class="strip-item">
+      <div class="num">02</div>
+      <p>Add what you need to your cart, review the total on screen, and send your order straight to us on WhatsApp.</p>
+    </div>
+    <div class="strip-item">
+      <div class="num">03</div>
+      <p>No payment needed in advance — just walk in, collect your order, and pay at the counter. Takeaway only.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-wrap">
+    <div>
+      <div class="f-brand">Himachal Janta Store</div>
+      <small>Totu, Shimla, Himachal Pradesh</small>
+    </div>
+    <small>Mon–Sat: 7:30am–8pm &nbsp;·&nbsp; Sun: 7:30am–11am &amp; 4pm–8pm</small>
+  </div>
+</footer>
+
+<script>
+  // ─── OWNER WHATSAPP NUMBER — swap this! ───
+  const OWNER_WA = "910000000000";
+
+  // ─── LOADER ───
+  const captions = [
+    "Rolling up the shop shutters...",
+    "Sorting almonds and cashews...",
+    "Dusting off the spice rack...",
+    "Stacking the atta sacks...",
+    "Wiping the price board, almost open..."
+  ];
+  let ci = 0;
+  const captionEl = document.getElementById('caption');
+  const capInterval = setInterval(() => {
+    ci = (ci + 1) % captions.length;
+    captionEl.style.opacity = 0;
+    setTimeout(() => { captionEl.textContent = captions[ci]; captionEl.style.opacity = 1; }, 200);
+  }, 680);
+  window.addEventListener('load', () => {
+    setTimeout(() => { document.getElementById('loader').classList.add('hidden'); clearInterval(capInterval); }, 2200);
+  });
+
+  // ─── PRODUCTS ───
+  // To add a real photo: add  img:"filename.jpg"  to any product object.
+  // Place the image file in the same folder as this HTML file.
+  const products = [
+    { id:1,  name:"Almonds (Badam)",      unit:"per kg",    price:780, cat:"dryfruits", icon:"🌰", tag:"Bestseller", img:"Images/Almonds.jpeg"},    
+    { id:2,  name:"Cashews (Kaju)",        unit:"per kg",    price:850, cat:"dryfruits", icon:"🥜", tag:"Bestseller", img: "Images/Cashews.jpeg"},
+    { id:3,  name:"In-Shell Walnuts (Akhrot)",      unit:"per kg",    price:720, cat:"dryfruits", icon:"🌰", img: "Images/In-Shell Walnuts.jpeg" },
+    { id:4,  name:"Walnuts (Akhrot)",      unit:"per kg",    price:720, cat:"dryfruits", icon:"🌰", img: "Images/Walnuts.jpg"},
+    { id:5,  name:"Raisins (Kishmish)",    unit:"per kg",    price:280, cat:"dryfruits", icon:"🍇" },
+    { id:6,  name:"Pistachios (Pista)",    unit:"per kg",    price:980, cat:"dryfruits", icon:"🥜", tag:"Premium" },
+    { id:7,  name:"Dried Apricots",        unit:"per kg",    price:420, cat:"dryfruits", icon:"🍑" },
+    { id:8,  name:"Dates (Khajoor)",       unit:"per kg",    price:220, cat:"dryfruits", icon:"🌴" },
+    { id:9,  name:"Mixed Dry Fruit Box",   unit:"per box",   price:650, cat:"dryfruits", icon:"🎁", tag:"Gifting" },
+    { id:10,  name:"Toor Dal",              unit:"per kg",    price:130, cat:"pulses",    icon:"🫘" },
+    { id:10, name:"Chana Dal",             unit:"per kg",    price:95,  cat:"pulses",    icon:"🫘" },
+    { id:11, name:"Moong Dal",             unit:"per kg",    price:120, cat:"pulses",    icon:"🫘" },
+    { id:12, name:"Rajma",                 unit:"per kg",    price:160, cat:"pulses",    icon:"🫘" },
+    { id:13, name:"Wheat Atta",            unit:"per 5kg",   price:240, cat:"pulses",    icon:"🌾" },
+    { id:14, name:"Basmati Rice",          unit:"per kg",    price:95,  cat:"pulses",    icon:"🍚" },
+    { id:15, name:"Sugar",                 unit:"per kg",    price:48,  cat:"pulses",    icon:"🧂" },
+    { id:16, name:"Peanut Butter",         unit:"per 340g",  price:240, cat:"spreads",   icon:"🥜" },
+    { id:17, name:"Nutella",               unit:"per 350g",  price:399, cat:"spreads",   icon:"🍫" },
+    { id:18, name:"Biscoff Spread",        unit:"per 380g",  price:450, cat:"spreads",   icon:"🍪" },
+    { id:19, name:"Pure Ghee",             unit:"per 1L",    price:620, cat:"spreads",   icon:"🧈" },
+    { id:20, name:"Mustard Oil",           unit:"per litre", price:150, cat:"spreads",   icon:"🫙" },
+    { id:21, name:"Olive Oil",             unit:"per 500ml", price:480, cat:"spreads",   icon:"🫒" },
+    { id:22, name:"Garam Masala",          unit:"per 100g",  price:55,  cat:"spices",    icon:"🌶️", tag:"House blend" },
+    { id:23, name:"Turmeric Powder",       unit:"per 100g",  price:30,  cat:"spices",    icon:"🟡" },
+    { id:24, name:"Red Chilli Powder",     unit:"per 100g",  price:40,  cat:"spices",    icon:"🌶️" },
+    { id:25, name:"Cumin Seeds (Jeera)",   unit:"per 100g",  price:45,  cat:"spices",    icon:"🫙" },
+    { id:26, name:"Maggi Noodles",         unit:"pack of 4", price:60,  cat:"snacks",    icon:"🍜" },
+    { id:27, name:"Wai Wai Noodles",       unit:"per pack",  price:25,  cat:"snacks",    icon:"🍜" },
+    { id:28, name:"Cup Noodles",           unit:"per cup",   price:55,  cat:"snacks",    icon:"🥡" },
+    { id:29, name:"Instant Soup",          unit:"per pack",  price:45,  cat:"snacks",    icon:"🥣" },
+    { id:30, name:"Namkeen (Mix)",         unit:"per 200g",  price:60,  cat:"snacks",    icon:"🥨" },
+    { id:31, name:"Assorted Biscuits",     unit:"per pack",  price:35,  cat:"bakery",    icon:"🍪" },
+    { id:32, name:"Baked Cookies",         unit:"per box",   price:90,  cat:"bakery",    icon:"🍪" },
+    { id:33, name:"Cake (Plain)",          unit:"per piece", price:120, cat:"bakery",    icon:"🍰" },
+    { id:34, name:"Potatoes",              unit:"per kg",    price:30,  cat:"vegetables",icon:"🥔" },
+    { id:35, name:"Onions",               unit:"per kg",    price:35,  cat:"vegetables",icon:"🧅" },
+    { id:36, name:"Garlic",               unit:"per kg",    price:180, cat:"vegetables",icon:"🧄" }
+  ];
+
+  const catColors = {
+    dryfruits:"#F2E2C4", pulses:"#EDE4D3", spreads:"#F4E3D3",
+    spices:"#F0DCC9",    snacks:"#E9E0CB", bakery:"#FBF0DF", vegetables:"#E3EBD9"
+  };
+
+  // ─── CART STATE ───
+  let cart = {}; // { productId: qty }
+
+  function getTotal(){ return Object.entries(cart).reduce((s,[id,qty])=>{ const p=products.find(x=>x.id==id); return s+(p?p.price*qty:0);},0); }
+  function getCount(){ return Object.values(cart).reduce((s,q)=>s+q,0); }
+
+  // ─── RENDER GRID ───
+  const grid = document.getElementById('grid');
+  function render(filter){
+    grid.innerHTML="";
+    products.filter(p=>filter==="all"||p.cat===filter).forEach(p=>{
+      const card=document.createElement('div');
+      card.className="card";
+      const qty=cart[p.id]||0;
+
+      // Image or emoji fallback
+      const imgHtml = p.img
+        ? `<img src="${p.img}" alt="${p.name}" loading="lazy"><span class="emoji-fallback" style="display:none">${p.icon}</span>`
+        : `<span class="emoji-fallback">${p.icon}</span>`;
+
+      card.innerHTML=`
+        <div class="card-img" style="background:${catColors[p.cat]}">
+          ${p.tag?`<div class="card-tag">${p.tag}</div>`:""}
+          ${imgHtml}
+        </div>
+        <div class="card-body">
+          <h3>${p.name}</h3>
+          <div class="unit">${p.unit}</div>
+          <div class="price-row">
+            <div class="price">₹${p.price} <span>/${p.unit.replace('per ','')}</span></div>
+          </div>
+          <div class="card-actions" id="actions-${p.id}"></div>
+        </div>`;
+      grid.appendChild(card);
+      renderCardAction(p.id);
+    });
+  }
+
+  function renderCardAction(id){
+    const el=document.getElementById(`actions-${id}`);
+    if(!el) return;
+    const qty=cart[id]||0;
+    if(qty===0){
+      el.innerHTML=`<button class="add-btn" onclick="addToCart(${id})">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add to cart
+      </button>`;
+    } else {
+      el.innerHTML=`<div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(${id},-1)">−</button>
+        <span class="qty-num">${qty}</span>
+        <button class="qty-btn" onclick="changeQty(${id},1)">+</button>
+      </div>`;
+    }
+  }
+
+  function addToCart(id){
+
+    cart[id] = (cart[id] || 0) + 1;
+
+    renderCardAction(id);
+    refreshCartUI();
+
+    const product = products.find(p => p.id == id);
+
+    showToast(`${product.name} added to cart ✓`);
+     }
+
+  function changeQty(id,delta){
+    cart[id]=(cart[id]||0)+delta;
+    if(cart[id]<=0) delete cart[id];
+    renderCardAction(id);
+    refreshCartUI();
+  }
+
+  // ─── CART DRAWER ───
+  function openCart(){ document.getElementById('cartDrawer').classList.add('open'); document.getElementById('cartOverlay').classList.add('open'); renderCartDrawer(); }
+  function closeCart(){ document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); }
+
+  function renderCartDrawer(){
+    const body=document.getElementById('cartBody');
+    const footer=document.getElementById('cartFooter');
+    const keys=Object.keys(cart);
+    if(keys.length===0){
+      body.innerHTML=`<div class="cart-empty"><span>🛒</span><p>Your cart is empty.<br>Add items from the catalog above.</p></div>`;
+      footer.style.display="none";
+      return;
+    }
+    body.innerHTML="";
+    keys.forEach(id=>{
+      const p=products.find(x=>x.id==id); if(!p) return;
+      const div=document.createElement('div');
+      div.className="cart-item";
+      const imgInner = p.img ? `<img src="${p.img}" alt="${p.name}">` : p.icon;
+      div.innerHTML=`
+        <div class="ci-icon" style="background:${catColors[p.cat]}">${imgInner}</div>
+        <div class="ci-info">
+          <div class="ci-name">${p.name}</div>
+          <div class="ci-unit">${p.unit}</div>
+          <div class="ci-price">₹${(p.price*cart[id]).toLocaleString('en-IN')}</div>
+        </div>
+        <div class="ci-qty">
+          <button class="ciq-btn" onclick="cartChangeQty(${id},-1)">−</button>
+          <span class="ciq-num">${cart[id]}</span>
+          <button class="ciq-btn" onclick="cartChangeQty(${id},1)">+</button>
+        </div>`;
+      body.appendChild(div);
+    });
+    document.getElementById('cartTotal').textContent="₹"+getTotal().toLocaleString('en-IN');
+    footer.style.display="block";
+  }
+
+  function cartChangeQty(id,delta){
+    changeQty(id,delta);
+    renderCartDrawer();
+  }
+
+  function clearCart(){
+    cart={};
+    refreshCartUI();
+    renderCartDrawer();
+    // Also reset card action buttons
+    products.forEach(p=>renderCardAction(p.id));
+  }
+
+  function refreshCartUI(){
+    const count=getCount();
+    const el=document.getElementById('cartCount');
+    el.textContent=count;
+    count>0?el.classList.add('show'):el.classList.remove('show');
+  }
+
+  // ─── NAME MODAL ───
+  function openNameModal(){
+    if(getCount()===0){ showToast("Your cart is empty!"); return; }
+    document.getElementById('nameModal').classList.add('open');
+    setTimeout(()=>document.getElementById('customerName').focus(),100);
+  }
+  function closeNameModal(){ document.getElementById('nameModal').classList.remove('open'); }
+  document.getElementById('customerName').addEventListener('keydown',e=>{ if(e.key==='Enter') sendWhatsApp(); });
+
+  // ─── SEND TO WHATSAPP ───
+  function sendWhatsApp(){
+    const name=document.getElementById('customerName').value.trim()||"Customer";
+    const lines=["🛒 *New Takeaway Order — Himachal Janta Store*",""];
+    lines.push(`👤 *Customer:* ${name}`);
+    lines.push("");
+    lines.push("*Items Ordered:*");
+    Object.entries(cart).forEach(([id,qty])=>{
+      const p=products.find(x=>x.id==id); if(!p) return;
+      lines.push(`• ${p.name} × ${qty}  —  ₹${(p.price*qty).toLocaleString('en-IN')} (₹${p.price} ${p.unit})`);
+    });
+    lines.push("");
+    lines.push(`💰 *Total: ₹${getTotal().toLocaleString('en-IN')}*`);
+    lines.push("");
+    lines.push("📍 Takeaway — customer will collect from store.");
+    lines.push("💳 Payment at counter.");
+    const msg=encodeURIComponent(lines.join("\n"));
+    closeNameModal();
+    closeCart();
+    window.open(`https://wa.me/${OWNER_WA}?text=${msg}`,"_blank");
+    showToast("Order sent! See you at the store 🎉");
+  }
+
+  // ─── TOAST ───
+  let toastTimer;
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
+  }
+
+  // ─── TABS ───
+  render("all");
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      render(tab.dataset.filter);
+    });
+  });
+</script>
+</body>
+</html>
