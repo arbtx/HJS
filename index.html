@@ -326,7 +326,8 @@
     <h3>Almost there! 🎉</h3>
     <p>Enter your name so we know who the order is for when you come to collect.</p>
     <input type="text" id="customerName" placeholder="Your name" maxlength="40" />
-    <div class="modal-btns">
+<input type="tel" id="customerPhone" placeholder="Your WhatsApp number" maxlength="10" />
+<div class="modal-btns">
       <button class="modal-cancel" onclick="closeNameModal()">Back</button>
       <button class="modal-confirm" onclick="sendWhatsApp()">Send Order</button>
     </div>
@@ -665,8 +666,10 @@
   // ─── SEND TO WHATSAPP ───
   function sendWhatsApp(){
     const name=document.getElementById('customerName').value.trim()||"Customer";
+    const phone=document.getElementById('customerPhone').value.trim()||"Not provided";
     const lines=["🛒 *New Takeaway Order — Himachal Janta Store*",""];
     lines.push(`👤 *Customer:* ${name}`);
+    lines.push(`📞 *Phone:* ${phone}`);
     lines.push("");
     lines.push("*Items Ordered:*");
     Object.entries(cart).forEach(([id,qty])=>{
