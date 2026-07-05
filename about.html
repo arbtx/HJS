@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Himachal Janta Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#1F3A2E; --pine-deep:#142922; --cream:#F7F1E3; --paper:#FFFCF6;
+    --terracotta:#C2693B; --apple:#A8392F; --gold:#D2A23A; --stone:#6E7B73;
+    --line:rgba(31,58,46,0.14); --shadow:0 10px 30px rgba(20,41,34,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--cream);color:var(--pine-deep);font-family:'Work Sans',sans-serif;overflow-x:hidden;}
+  h1,h2,h3{font-family:'Fraunces',serif;}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:200;background:rgba(247,241,227,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav-wrap{max-width:1180px;margin:0 auto;padding:0.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .brand{display:flex;align-items:center;gap:0.6rem;flex-shrink:0;text-decoration:none;color:inherit;}
+  .brand-logo{width:55px;height:55px;border-radius:0;object-fit:contain;background:transparent;}
+  .brand-name{font-size:1.15rem;font-weight:600;line-height:1.2;}
+  .brand-loc{font-size:0.68rem;color:var(--stone);letter-spacing:0.4px;text-transform:uppercase;}
+  nav ul{list-style:none;display:flex;gap:1.6rem;}
+  nav a{color:var(--pine-deep);text-decoration:none;font-size:0.9rem;font-weight:500;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color 0.2s;}
+  nav a:hover, nav a.active{border-color:var(--terracotta);color:var(--terracotta);}
+
+  /* HERO BANNER */
+  .about-hero{
+    background:linear-gradient(160deg, var(--pine) 0%, var(--pine-deep) 100%);
+    color:var(--cream);
+    padding:5rem 1.5rem 4rem;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .about-hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,200 0,80 200,20 400,100 600,10 800,90 1000,30 1200,80 1200,200' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E") bottom/cover no-repeat;
+  }
+  .about-hero .eyebrow{font-size:0.76rem;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:0.6rem;}
+  .about-hero .eyebrow::before,.about-hero .eyebrow::after{content:'';width:24px;height:1px;background:var(--gold);display:inline-block;}
+  .about-hero h1{font-size:3.2rem;font-weight:600;line-height:1.08;margin-bottom:1rem;}
+  .about-hero h1 em{font-style:italic;color:var(--gold);}
+  .about-hero p{font-size:1.05rem;color:rgba(247,241,227,0.78);max-width:52ch;margin:0 auto;}
+  .since-badge{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    background:rgba(210,162,58,0.18);border:1px solid rgba(210,162,58,0.35);
+    border-radius:999px;padding:0.45rem 1.1rem;
+    font-size:0.82rem;font-weight:600;color:var(--gold);
+    margin-bottom:1.6rem;letter-spacing:0.3px;
+  }
+
+  /* RIDGE */
+  .ridge{width:100%;height:46px;display:block;}
+
+  /* STORY SECTION */
+  .section{max-width:860px;margin:0 auto;padding:3.8rem 1.5rem;}
+  .section-wide{max-width:1100px;margin:0 auto;padding:3.8rem 1.5rem;}
+
+  .section-label{font-size:0.74rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--terracotta);font-weight:600;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;}
+  .section-label::before{content:'';width:18px;height:1px;background:var(--terracotta);display:inline-block;}
+  .section h2{font-size:2rem;font-weight:600;margin-bottom:1.6rem;line-height:1.15;}
+  .section-wide h2{font-size:2rem;font-weight:600;margin-bottom:0.6rem;line-height:1.15;text-align:center;}
+  .section-wide .sub{font-size:0.95rem;color:var(--stone);text-align:center;margin-bottom:2.8rem;max-width:52ch;margin-left:auto;margin-right:auto;}
+
+  .story-body p{font-size:1.02rem;line-height:1.75;color:#2E3D35;margin-bottom:1.3rem;}
+  .story-body p:last-child{margin-bottom:0;}
+
+  .thank-you{
+    margin-top:2rem;font-size:1.05rem;font-family:'Fraunces',serif;font-style:italic;
+    color:var(--apple);font-weight:500;
+  }
+
+  /* DIVIDER */
+  .divider{border:none;border-top:1px solid var(--line);margin:0;}
+
+  /* WHY US */
+  .why-strip{background:var(--pine);color:var(--cream);}
+  .why-wrap{max-width:1100px;margin:0 auto;padding:3.8rem 1.5rem;}
+  .why-wrap h2{font-family:'Fraunces',serif;font-size:2rem;font-weight:600;margin-bottom:0.5rem;}
+  .why-wrap .sub{font-size:0.95rem;color:rgba(247,241,227,0.65);margin-bottom:2.4rem;}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+  .why-card{
+    background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+    border-radius:14px;padding:1.4rem 1.5rem;
+  }
+  .why-card .icon{font-size:1.8rem;margin-bottom:0.7rem;}
+  .why-card p{font-size:0.92rem;color:rgba(247,241,227,0.85);line-height:1.6;}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+  .review-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:1.4rem 1.5rem;display:flex;flex-direction:column;gap:0.7rem;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .review-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .stars{color:var(--gold);font-size:0.95rem;letter-spacing:1px;}
+  .review-text{font-size:0.92rem;line-height:1.6;color:#2E3D35;font-style:italic;flex:1;}
+  .review-author{font-size:0.78rem;font-weight:600;color:var(--stone);margin-top:auto;}
+  .review-author span{display:block;font-size:0.7rem;font-weight:400;color:var(--terracotta);margin-top:0.15rem;}
+
+  /* LEGACY CTA */
+  .legacy{
+    background:linear-gradient(135deg,var(--pine-deep) 0%,var(--pine) 100%);
+    color:var(--cream);text-align:center;padding:4.5rem 1.5rem;
+  }
+  .legacy h2{font-size:2.1rem;font-weight:600;margin-bottom:1rem;line-height:1.15;}
+  .legacy h2 em{font-style:italic;color:var(--gold);}
+  .legacy p{font-size:1rem;color:rgba(247,241,227,0.75);max-width:50ch;margin:0 auto 2rem;}
+  .legacy-btn{
+    display:inline-block;background:var(--apple);color:var(--paper);
+    padding:0.9rem 2rem;border-radius:8px;text-decoration:none;
+    font-weight:600;font-size:0.95rem;box-shadow:var(--shadow);
+    transition:filter 0.2s;
+  }
+  .legacy-btn:hover{filter:brightness(0.9);}
+
+  /* FOOTER */
+  footer{background:var(--pine-deep);color:rgba(247,241,227,0.7);padding:2.4rem 1.5rem 1.6rem;}
+  .footer-wrap{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:center;}
+  .footer-wrap .f-brand{color:var(--cream);font-family:'Fraunces',serif;font-size:1.1rem;}
+  .footer-wrap small{font-size:0.76rem;}
+  .footer-wrap a{color:rgba(247,241,227,0.7);text-decoration:none;}
+  .footer-wrap a:hover{color:var(--cream);}
+
+  @media(max-width:880px){
+    .about-hero h1{font-size:2.2rem;}
+    .why-grid{grid-template-columns:1fr;}
+    .reviews-grid{grid-template-columns:1fr;}
+    nav ul li:not(:last-child){display:none;}
+  }
+  @media(max-width:460px){
+    .about-hero h1{font-size:1.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="nav-wrap">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="Himachal Janta Store Logo" class="brand-logo">
+      <div>
+        <div class="brand-name">Himachal Janta Store</div>
+        <div class="brand-loc">Totu · Shimla · HP</div>
+      </div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html#dryfruits">Dry Fruits</a></li>
+        <li><a href="index.html#pulses">Pulses &amp; Atta</a></li>
+        <li><a href="index.html#spreads">Spreads &amp; Oils</a></li>
+        <li><a href="index.html#snacks">Snacks &amp; Instant</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="since-badge">⭐ Est. 1975 · Totu, Shimla</div>
+  <div class="eyebrow">Our Story</div>
+  <h1>Nearly Five Decades<br>of <em>Trust.</em></h1>
+  <p>From a humble neighbourhood shop to a beloved community landmark — this is the story of Himachal Janta Store.</p>
+</section>
+
+<svg class="ridge" viewBox="0 0 1200 46" preserveAspectRatio="none" style="background:var(--pine-deep);">
+  <polygon points="0,46 0,20 100,5 220,28 340,8 460,30 600,4 740,26 860,10 1000,32 1100,12 1200,24 1200,46" fill="#F7F1E3"/>
+  <polygon points="0,46 0,30 100,18 220,38 340,20 460,40 600,16 740,36 860,22 1000,42 1100,24 1200,34 1200,46" fill="#FFFCF6"/>
+</svg>
+
+<!-- STORY -->
+<div class="section">
+  <div class="section-label">Who We Are</div>
+  <h2>A store built on honesty,<br>quality & personal service.</h2>
+  <div class="story-body">
+    <p>Established in 1975, Himachal Janta Store has been a part of Totu's everyday life for generations. What began as a humble neighbourhood grocery store under the vision of <strong>Shri Baldev Raj Bathla</strong> has grown into one of Totu's most trusted destinations for groceries, premium dry fruits, spices, household essentials, and everyday needs.</p>
+    <p>Today, the legacy continues under the management of <strong>Shri Naveen Kumar Bathla</strong>, carrying forward the same values of honesty, quality, and personal service that have defined the store since its inception.</p>
+    <p>Over the years, we've watched Totu and Shimla grow and evolve around us. Children who once accompanied their parents to our store now return with families of their own. These familiar faces and lasting relationships are what make Himachal Janta Store more than just a grocery shop — they make it a part of the community.</p>
+    <p>For nearly 50 years, our shelves have supplied the kitchens of local families, earning their trust one purchase at a time. Whether you're visiting us for your daily groceries, premium dry fruits, festive essentials, or household products, you'll always find the same warmth, quality, and commitment that have made us a trusted name since 1975.</p>
+    <div class="thank-you">"Thank you for making Himachal Janta Store a part of your home."</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- WHY US -->
+<section class="why-strip">
+  <div class="why-wrap">
+    <h2>Why Families Choose Us</h2>
+    <p class="sub">Five reasons locals have trusted us for nearly five decades.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="icon">🏪</div>
+        <p>Serving Totu since <strong>1975</strong> — a name that generations of families have grown up with.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">🌰</div>
+        <p>Premium dry fruits, quality groceries and everyday essentials — all under one roof.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">💚</div>
+        <p>Honest pricing with dependable quality. No shortcuts, no compromise — ever.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">🤝</div>
+        <p>Trusted by generations of local families who return not just for products, but for the relationship.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">📍</div>
+        <p>Proudly serving Totu, Shimla, and nearby communities with the same warmth since day one.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">🎁</div>
+        <p>A go-to destination for festive gifting — our dry fruit boxes are loved across the region.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<div class="section-wide">
+  <div style="text-align:center;margin-bottom:0.5rem;">
+    <span class="section-label" style="justify-content:center;">What Our Customers Say</span>
+  </div>
+  <h2>Loved by Generations Since 1975</h2>
+  <p class="sub">Every visit, every recommendation, and every review motivates us to keep serving our community with the same dedication and care.</p>
+
+  <div class="reviews-grid">
+
+    <div class="review-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"One of the best grocery stores in Totu."</div>
+      <div class="review-author">Mukul Gupta</div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"One of the best grocery stores in Shimla. Excellent quality with no compromise."</div>
+      <div class="review-author">Anuj Verma <span>Local Guide</span></div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"Great prices and a wonderful shop."</div>
+      <div class="review-author">Raj Raj <span>Local Guide</span></div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">⭐⭐⭐⭐☆</div>
+      <div class="review-text">"A reliable neighbourhood grocery store."</div>
+      <div class="review-author">Munish Kumar <span>Local Guide</span></div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"Good store."</div>
+      <div class="review-author">Deepak Kumar <span>Local Guide</span></div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"The best grocery store in the region."</div>
+      <div class="review-author">Pankaj Sharma</div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"Good products."</div>
+      <div class="review-author">Vijay Pawar <span>Shimla Travel Way · Local Guide</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LEGACY CTA -->
+<section class="legacy">
+  <h2>A Legacy That <em>Continues.</em></h2>
+  <p>From 1975 to today, Himachal Janta Store has remained committed to quality, trust, and service. We look forward to welcoming every customer — whether you're visiting for the first time or continuing a family tradition that spans generations.</p>
+  <a class="legacy-btn" href="index.html">Browse Our Store →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wrap">
+    <div>
+      <div class="f-brand">Himachal Janta Store</div>
+      <small>Totu, Shimla, Himachal Pradesh</small>
+    </div>
+    <small>Mon–Sat: 7:30am–8pm &nbsp;·&nbsp; Sun: 7:30am–11am &amp; 4pm–8pm</small>
+    <small><a href="about.html">About Us</a></small>
+  </div>
+</footer>
+
+</body>
+</html>
