@@ -388,7 +388,7 @@
          alt="Dry Fruits"
          class="hero-image">
 
-    <button onclick="document.getElementById('dry-fruits').scrollIntoView({behavior:'smooth'})">
+    <a class="btn-primary" href="#catalog" style="position:absolute;bottom:1.5rem;right:1.5rem;z-index:2;">Browse Dry Fruits</a>
     Browse Dry Fruits
 </button>
 
@@ -485,7 +485,7 @@
     { id:6,  name:"Pistachios (Pista)",    unit:"per kg",    price:980, cat:"dryfruits", icon:"🥜", tag:"Premium" },
     { id:7,  name:"Dried Apricots",        unit:"per kg",    price:420, cat:"dryfruits", icon:"🍑" },
     { id:8,  name:"Dates (Khajoor)",       unit:"per kg",    price:220, cat:"dryfruits", icon:"🌴" },
-    { id:9,  name: "Ghee (Different Varieties)", unit: "per kg, per half kg", price:600-740, cat: "Dairy", icon:"🐄🥛", img: "Images/Ghee.png"},
+    { id:9,  name: "Ghee (Different Varieties)", unit: "per kg, per half kg", price:650, cat: "Dairy", icon:"🐄🥛", img: "Images/Ghee.png"},
     { id:9,  name:"Mixed Dry Fruit Box",   unit:"per box",   price:650, cat:"dryfruits", icon:"🎁", tag:"Gifting" },
     { id:10, name:"Toor Dal",              unit:"per kg",    price:130, cat:"pulses",    icon:"🫘" },
     { id:10, name:"Chana Dal",             unit:"per kg",    price:95,  cat:"pulses",    icon:"🫘" },
@@ -518,8 +518,8 @@
   ];
 
   const catColors = {
-    dryfruits:"#F2E2C4", pulses:"#EDE4D3", spreads:"#F4E3D3",
-    spices:"#F0DCC9",    snacks:"#E9E0CB", bakery:"#FBF0DF", vegetables:"#E3EBD9"
+    dryfruits:"#F2E2C4", pulses:"#EDE4D3", spreads:"#F4E3D3", Vegetables: "#E3EBD9",
+    spices:"#F0DCC9",    snacks:"#E9E0CB", bakery:"#FBF0DF", Dairy:"#E3EBD9"
   };
 
   // ─── CART STATE ───
