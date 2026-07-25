@@ -415,6 +415,9 @@
     <button class="tab" data-filter="snacks">🍜 Snacks &amp; Instant</button>
     <button class="tab" data-filter="bakery">🍪 Biscuits &amp; Bakery</button>
     <button class="tab" data-filter="vegetables">🥔 Vegetables</button>
+    <button class="tab" data-filter="beverages">🍵 Beverages</button>
+    <button class="tab" data-filter="cosmetics">🧴 Personal Care</button>
+    <button class="tab" data-filter="household">🧹 Household</button>
   </div>
   <div class="grid" id="grid"></div>
 </section>
@@ -515,12 +518,34 @@
     { id:33, name:"Cake (Plain)",          unit:"per piece", price:120, cat:"bakery",    icon:"🍰", img: "Images/BakeryCakes.webp" },
     { id:34, name:"Potatoes",              unit:"per kg",    price:30,  cat:"vegetables",icon:"🥔", img: "Images/potatoes.png" },
     { id:35, name:"Onions",               unit:"per kg",    price:35,  cat:"vegetables",icon:"🧅", img: "Images/Onion.webp" },
-    { id:36, name:"Garlic",               unit:"per kg",    price:180, cat:"vegetables",icon:"🧄", img: "Images/Garlic.webp" }
+    { id:36, name:"Garlic",               unit:"per kg",    price:180, cat:"vegetables",icon:"🧄", img: "Images/Garlic.webp" },
+    // ── PERSONAL CARE / COSMETICS ──
+    { id:40, name:"Shampoo",               unit:"per bottle", price:199, cat:"cosmetics", icon:"🧴", img: "Images/Shampoo.png" },
+    { id:41, name:"Conditioner",           unit:"per bottle", price:199, cat:"cosmetics", icon:"🧴", img: "Images/Shampoo.png" },
+    { id:42, name:"Face Wash",             unit:"per tube",   price:99,  cat:"cosmetics", icon:"🧖", img: "Images/Facewash.jpg" },
+    { id:43, name:"Bathing Soap",          unit:"per bar",    price:45,  cat:"cosmetics", icon:"🧼", img: "Images/BathingSoap.png" },
+    { id:44, name:"Body Wash",             unit:"per bottle", price:249, cat:"cosmetics", icon:"🚿", img: "Images/BodyWash.webp" },
+    { id:45, name:"Sunscreen",             unit:"per tube",   price:299, cat:"cosmetics", icon:"☀️", img: "Images/Sunscreen.webp" },
+    { id:46, name:"Body Lotion",           unit:"per bottle", price:179, cat:"cosmetics", icon:"🧴", img: "Images/BodyLotion.png" },
+    { id:47, name:"Perfume",               unit:"per bottle", price:399, cat:"cosmetics", icon:"💐", img: "Images/Perfume.png" },
+    { id:48, name:"Deodorant",             unit:"per piece",  price:179, cat:"cosmetics", icon:"💨", img: "Images/Deo.png" },
+    { id:49, name:"Toothpaste",            unit:"per tube",   price:89,  cat:"cosmetics", icon:"🦷", img: "Images/Toothpaste.png" },
+    { id:50, name:"Toothbrush",            unit:"per piece",  price:49,  cat:"cosmetics", icon:"🪥", img: "Images/Toothbrush.png" },
+
+// ── HOUSEHOLD / CLEANING ──
+    { id:51, name:"Handwash",              unit:"per bottle", price:99,  cat:"household", icon:"🤲", img: "Images/Garlic.webp" },
+    { id:52, name:"Handwash Refill",       unit:"per pouch",  price:75,  cat:"household", icon:"🤲", img: "Images/Garlic.webp" },
+    { id:53, name:"Dishwashing Soap",      unit:"per bar",    price:35,  cat:"household", icon:"🍽️", img: "Images/Garlic.webp" },
+    { id:54, name:"Dishwashing Liquid",    unit:"per bottle", price:119, cat:"household", icon:"🍽️", img: "Images/Garlic.webp" },
+    { id:55, name:"Detergent Powder",      unit:"per kg",     price:130, cat:"household", icon:"🧺", img: "Images/Garlic.webp" },
+    { id:56, name:"Detergent Liquid",      unit:"per bottle", price:199, cat:"household", icon:"🧺", img: "Images/Garlic.webp" },
+    { id:57, name:"Detergent Soap",        unit:"per bar",    price:40,  cat:"household", icon:"🧼", img: "Images/Garlic.webp" }
   ];
 
   const catColors = {
     dryfruits:"#F2E2C4", pulses:"#EDE4D3", spreads:"#F4E3D3", Vegetables: "#E3EBD9",
-    spices:"#F0DCC9",    snacks:"#E9E0CB", bakery:"#FBF0DF", Dairy:"#E3EBD9"
+    spices:"#F0DCC9",    snacks:"#E9E0CB", bakery:"#FBF0DF", Dairy:"#E3EBD9",
+    beverages:"#E8F0E8", cosmetics:"#F5E6F0", household:"#E6EEF5"
   };
 
   // ─── CART STATE ───
