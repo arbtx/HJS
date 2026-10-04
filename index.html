@@ -421,6 +421,7 @@
     <button class="tab active" data-filter="all">All</button>
     <button class="tab" data-filter="dryfruits">🌰 Dry Fruits</button>
     <button class="tab" data-filter="pulses">🫘 Pulses, Atta &amp; Rice</button>
+    <button class="tab" data-filter="Dairy">🐄 Ghee</button>
     <button class="tab" data-filter="spreads">🫙 Spreads &amp; Oils</button>
     <button class="tab" data-filter="spices">🌶️ Spices</button>
     <button class="tab" data-filter="snacks">🍜 Snacks &amp; Instant</button>
@@ -481,7 +482,7 @@
     captionEl.style.opacity = 0;
     setTimeout(() => { captionEl.textContent = captions[ci]; captionEl.style.opacity = 1; }, 200);
   }, 680);
-  window.addEventListener('load', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => { document.getElementById('loader').classList.add('hidden'); clearInterval(capInterval); }, 2200);
   });
 
